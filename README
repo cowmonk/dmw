@@ -6,7 +6,7 @@ neuwld to draw the bar. This is a bit more "feature"-full thanks to the extra
 neuswc/neuwld patches from MICE (a seperate project).
 
 See: my forks of neuswc/neuwld which apply these patches that haven't been
-upstreamed yet (most of the patches com from xplshn):
+upstreamed yet (most of the patches come from xplshn):
 
 - https://git.daat.foo/neuswc/file/README.html
 - https://git.daat.foo/neuwld/file/README.html
