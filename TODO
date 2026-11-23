@@ -20,6 +20,9 @@ These TODOs are in no particular order.
   get this feature back.
 - Urgent tags still need an attention request that neuswc can deliver
   to dmw. Maybe patch some wlr-* protocols to neuswc?
+- Possibly re-add resizehints, however this will likely require neuswc
+  patches. It's usually turned off for me since it generally looks ugly
+  imho.
 
 already good (maybe) based on feel (and the fact I'm currently trying to daily
 drive this): tile, monocle, floating, zoom, tags, app-ID rules, bar clicks,
