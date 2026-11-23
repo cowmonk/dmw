@@ -1,48 +1,116 @@
-dwm - dynamic window manager
-============================
-dwm is an extremely fast, small, and dynamic window manager for X.
+dmw - dwm made in wayland
+=========================
+
+dmw ports dwm to suckless Wayland. It uses neuswc for window management and
+neuwld to draw the bar. This is a bit more "feature"-full thanks to the extra
+neuswc/neuwld patches from MICE (a seperate project).
+
+See: my forks of neuswc/neuwld which apply these patches that haven't been
+upstreamed yet (most of the patches com from xplshn):
+
+- https://git.daat.foo/neuswc/file/README.html
+- https://git.daat.foo/neuwld/file/README.html
+
+Disclaimer
+----------
 
 
-Requirements
+
+Build
+-----
+
+Install neuswc and neuwld with the MICE port patches, their pkg-config
+files (swc.pc and wld.pc), and wayland-scanner. The build reads swc.xml
+from the installed neuswc prefix. For a static-only neuswc installation
+use make PKG_CONFIG='pkg-config --static'.
+
+    make
+    make install
+
+The first build copies config.def.h to config.h. Edit config.h and rebuild
+to change bindings, colors, fonts or rules. Rules match substrings of the
+Wayland app ID and title. The default commands are `st-wl` and `neumenu_run`.
+
+Run
+---
+
+From a VT with XDG_RUNTIME_DIR set, run:
+
+    swc-launch dmw
+
+Inside an existing Wayland session, use the nested backend:
+
+    SWC_BACKEND=nested dmw
+
+Alt-Shift-Return starts a terminal. Alt-p opens the launcher.
+Alt-Shift-q exits. See config.h if you want to change the default MOD key.
+
+The bar reads one status line at a time from stdin:
+
+    while date; do sleep 1; done | swc-launch dmw
+
+Patches
+-------
+
+This project tries to not overstep it's boundaries with what a tiling wm
+should do and implement just like the original dwm. It should be relatively
+easy to patch dmw.
+
+Patches live in https://git.daat.foo/dmw-patches/log.html. See Contributing
+below if you would like to contribute to the repository of patches or this
+project in particular.
+
+Contributing
 ------------
-In order to build dwm you need the Xlib header files.
 
+All development is on the [stagit repo](https://git.daat.foo/dmw/log.html).
+However while it is much preferred, you can send PRs in the github mirror.
+It's just frowned upon (my me). All contributions should be sent via email.
 
-Installation
-------------
-Edit config.mk to match your local setup (dwm is installed into
-the /usr/local namespace by default).
+Run a quick `git format-patch HEAD~1` and send to *cowmonk@based.pt* with the 
+subject head of `[PATCH] dmw`. Consider reading the manpages of `git-send-email`
+if you are interested in moving towards email for development.
 
-Afterwards enter the following command to build and install dwm (if
-necessary as root):
+I *strongly* suggest pgp encrypting your email, in which case my public keys
+can be found on `keys.openpgp.org` or here:
 
-    make clean install
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: 52B0 852C 5A4C 823C FAB7  420A 2F73 9BCA BDD5 B880
+Comment: cowmonk@based.pt
 
+xjMEaSJi8xYJKwYBBAHaRw8BAQdAEVP64bLVXCxZYH5rItmtvThKyTrRZ4HFCZ42
+IqFx+crNEGNvd21vbmtAYmFzZWQucHTCiQQTFggAGgQLCQgHAhUIAhYBAhkABYJp
+ImLzAp4BApsDACEJEC9zm8q91biAFiEEUrCFLFpMgjz6t0IKL3Obyr3VuIBOEQEA
++gIa9t3yKL3FAHg5VT2xV8M2VdLf1ZqaFlCPyGhXBZsA+QGGstK6+YsUbmP+H6I5
+r4AgLawGeB9IH7WC0w4dhTsKzjgEaSJi8xIKKwYBBAGXVQEFAQEHQMsmen1ddl9a
+ddXu4ktm8BATTlEy2k4zMzo6RnyRB+d4AwEIB8J4BBgWCAAJBYJpImLzApsMACEJ
+EC9zm8q91biAFiEEUrCFLFpMgjz6t0IKL3Obyr3VuIA9AQD/S/EL51hMSBI35Lr3
+RjuNFtqnlgYpfkMxgPvp2bWRY60A/2NhDRNUjY2wA4+mESlCIf94FVvqcfclnSZU
+A7wM/YAB
+=nZZp
+-----END PGP PUBLIC KEY BLOCK-----
 
-Running dwm
------------
-Add the following line to your .xinitrc to start dwm using startx:
+see: ./TODO if you want to see what to possibly help out with.
 
-    exec dwm
+Credits
+-------
 
-In order to connect dwm to a specific display, make sure that
-the DISPLAY environment variable is set correctly, e.g.:
+- [dwm](https://dwm.suckless.org/) - greatest tiling wm
+- [neulibs](https://sr.ht/~shrub900/neulibs/) - good wayland implementation
+- [tohu](https://git.sr.ht/~shrub900/tohu) - good reference impl.
+- [wsxwm](https://git.sr.ht/~uint/wsxwm) - really good ref for neuswc compositors
 
-    DISPLAY=foo.bar:1 exec dwm
+- dacctal - for the amazing name, also great youtuber
+- michaelforney - swc/wld creator <3
+- shrub900 - started derive and wayland.fyi, also made neuswc/neuwld
+- uint23 - great programmer, made neumenu
+- xplshn - a vast amount of patches for neuswc were created by him
 
-(This will start dwm on display :1 of the host foo.bar.)
+Relevant
+--------
+ 
+- [neumenu](https://git.sr.ht/~uint/neumenu) - really good fork of a fork
+- [st-wl](https://github.com/michaelforney/st) - good (enough) wayland st fork
+- [dwc](https://git.sr.ht/~corg/DWC) - dwm-like wayland compositor
+- [velox](https://github.com/michaelforney/velox) - simple compositor based on swc
 
-In order to display status info in the bar, you can do something
-like this in your .xinitrc:
-
-    while xsetroot -name "`date` `uptime | sed 's/.*,//'`"
-    do
-    	sleep 1
-    done &
-    exec dwm
-
-
-Configuration
--------------
-The configuration of dwm is done by creating a custom config.h
-and (re)compiling the source code.

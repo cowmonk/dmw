@@ -1,0 +1,26 @@
+These TODOs are in no particular order.
+
+- make manpages (removed dwm.1), unsure whether or not to reuse the dwm
+  one and just go with the flow or just to not have manpages at all.
+- get two monitors going with different tags and layouts. send windows
+  both ways, including a fullscreen one. watch the focus, borders and bar.
+  Multimonitor is largely untested.
+- bring back urgent tags if neuswc can tell us an app wants attention.
+  a hidden tag should light up and clear when we focus the window. This
+  might require patches to neuswc...
+- create docs/ for simple stuff. a short config.h example for keys, app-ID
+  rules and the bar font, plus the VT and nested launch commands. Some other
+  nice things also are XKB_* stuff and other things that were less unclear
+  to me personally when I had first used swc/velox and stuff.
+- dwm's corner warp on mouse resize is possible on DRM with the existing
+  swc_cursor_set_position(). In a nested session the outer compositor
+  owns the physical pointer. dmw currently resizes from the drag origin.
+- dwm marks a shortened bar title with three dots; dmw clips it at the
+  edge. It's probably possible using font advance & clip rectangle to
+  get this feature back.
+- Urgent tags still need an attention request that neuswc can deliver
+  to dmw. Maybe patch some wlr-* protocols to neuswc?
+
+already good (maybe) based on feel (and the fact I'm currently trying to daily
+drive this): tile, monocle, floating, zoom, tags, app-ID rules, bar clicks,
+move/resize, close, fullscreen and live swstatus updates.

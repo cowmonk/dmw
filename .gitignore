@@ -1,0 +1,5 @@
+*.o
+config.h
+dmw
+swc-client-protocol.h
+swc-protocol.c
