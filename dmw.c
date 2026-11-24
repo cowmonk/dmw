@@ -195,15 +195,8 @@ restack(struct Monitor *m)
 {
 	struct Client *c = m->sel;
 
-	if (!c || !ISVISIBLE(c))
-		return;
-	if (c->mode != Tiled || m->lt[m->sellt]->arrange == monocle) {
+	if (c && ISVISIBLE(c))
 		swc_window_raise(c->win);
-		if (c->mode == Tiled)
-			for (c = m->stack; c; c = c->snext)
-				if (c->isfloating && ISVISIBLE(c))
-					swc_window_raise(c->win);
-	}
 }
 
 static void
@@ -314,6 +307,7 @@ arrange(struct Monitor *m)
 			else
 				swc_window_set_stacked(c->win);
 			c->mode = mode;
+			swc_window_raise(c->win);
 		}
 		if (ISVISIBLE(c)) {
 			swc_window_show(c->win);
