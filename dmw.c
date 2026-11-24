@@ -307,7 +307,7 @@ arrange(struct Monitor *m)
 			else
 				swc_window_set_stacked(c->win);
 			c->mode = mode;
-			swc_window_raise(c->win);
+			swc_window_set_z(c->win, mode == Tiled ? SWC_Z_WINDOW : SWC_Z_WINDOW + 1);
 		}
 		if (ISVISIBLE(c)) {
 			swc_window_show(c->win);
@@ -967,7 +967,7 @@ newwindow(struct swc_window *win)
 	static const struct swc_window_handler handler = {
 		.destroy = unmanage, .entered = entered, .title_changed = metadatachanged,
 		.app_id_changed = metadatachanged, .parent_changed = parentchanged,
-		.size_changed = sizechanged,
+		.size_changed = sizechanged, .fullscreen = setfullscreen,
 	};
 	struct Client *c;
 
@@ -978,9 +978,6 @@ newwindow(struct swc_window *win)
 	c->mode = -1;
 	attach(c, selmon);
 	swc_window_set_handler(win, &handler, c);
-#ifdef SWC_WINDOW_FULLSCREEN_REQUEST
-	swc_window_set_fullscreen_handler(win, setfullscreen);
-#endif
 	win->motion_throttle_ms = 1000 / MAX(1, refreshrate);
 	/* wait for the title and app id before matching rules for a new toplevel: */
 	c->pending = wl_event_loop_add_idle(loop, manage, c);
