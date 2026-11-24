@@ -11,6 +11,24 @@ upstreamed yet (most of the patches come from xplshn):
 - https://git.daat.foo/neuswc/file/README.html
 - https://git.daat.foo/neuwld/file/README.html
 
+Disclaimer
+----------
+
+Unlike other neuswc/neuwld compositors, this is targeted against an
+experimental in production version of neuswc which applies (and will continue
+to apply) many patches that are not within the main neuswc/neuwld project (yet).
+While it's not as unstable or as breaking as wlroots (in fact these APIs only
+add more compatibility and fixes on top of neuswc), it can be frustrating because
+dmw will always reflect these new changes (or at least if it's applicable).
+
+These patches are tested before they are published on my repos, and in fact, 
+there are still many more to come since MICE is a relatively old project that
+has been in development for a long time now (ever since aruu was created).
+
+Before you pull the latest commits of dmw, please check the commit messages
+and be sure to also check the neuswc/neuwld for any new changes.
+
+Here be dragons.
 
 Build
 -----
