@@ -20,4 +20,4 @@ CPPFLAGS ?= -Os -Wall
 CFLAGS   ?= -Os -Wall
 
 # compiler and linker
-CC = cproc
+CC = cc
